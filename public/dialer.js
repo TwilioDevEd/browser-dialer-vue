@@ -99,6 +99,11 @@ new Vue({
     // Handle numeric buttons
     appendDigit: function(digit) {
       this.currentNumber += digit;
+
+      var conn = Twilio.Device.activeConnection();
+      if (conn && conn.status() == 'open') {
+        conn.sendDigits(digit);
+      }
     }
   }
 });
