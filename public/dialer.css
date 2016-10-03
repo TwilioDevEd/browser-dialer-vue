@@ -1,0 +1,71 @@
+textarea:hover,  input:hover, textarea:active, input:active, textarea:focus, 
+button:focus, button:active, button:hover, label:focus, .btn:active, 
+.btn.active {
+    outline:0px !important;
+    -webkit-appearance:none;
+}
+
+.dropdown-menu li a {
+  padding: 3px 10px;
+}
+
+.btn-circle {
+  width: 49px;
+  height: 49px;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 20px;
+  line-height: 2.00;
+  border-radius: 30px;
+}
+
+.controls, .keys {
+  padding-top: 10px;
+}
+
+.controls {
+  float: left;
+}
+
+.controls .btn {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.keys {
+  padding-left: 20px;
+  float: right;
+  text-align: center;
+  color: #fff;
+}
+
+.key-row {
+  margin-bottom: 20px;
+}
+
+.key-row .btn {
+  font-weight: 100;
+}
+
+.key-row .btn span {
+  display: block;
+  padding-top: 2px;
+  font-size: 10px;
+  color: #787878;
+}
+
+.log {
+  background-color: #ddd;
+  clear: both;
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #787878;
+}
+
+p {
+  font-size: 10px;
+  color: #787878;
+  font-style: italic;
+  margin-top: 10px;
+}
