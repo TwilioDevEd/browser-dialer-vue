@@ -34,7 +34,8 @@ new Vue({
       { name: 'Hong Kong', cc: '852', code: 'hk' },
       { name: 'Ireland', cc: '353', code: 'ie' },
       { name: 'Singapore', cc: '65', code: 'sg' },
-      { name: 'Spain', cc: '34', code: 'es' }
+      { name: 'Spain', cc: '34', code: 'es' },
+      { name: 'Brazil', cc: '55', code: 'br' },
     ]
   },
 
@@ -62,9 +63,7 @@ new Vue({
   computed: {
     // Computed property to validate the current phone number
     validPhone: function() {
-      return true;
-      //var n = this.currentNumber.replace(/\D/g, '')
-      //return Number(n) >= 0
+      return /^([0-9]|#|\*)+$/.test(this.currentNumber);
     }
   },
 
@@ -99,6 +98,11 @@ new Vue({
         // hang up call in progress
         Twilio.Device.disconnectAll();
       }
+    },
+
+    // Handle numeric buttons
+    appendDigit: function(digit) {
+      this.currentNumber += digit;
     }
   }
 });

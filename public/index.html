@@ -52,7 +52,7 @@
     <div class="controls">
       <button class="btn btn-circle" v-on:click="toggleCall()"
         v-bind:class="[ onPhone ? 'btn-danger': 'btn-success' ]"
-        v-attr:disabled="validPhone">
+        v-attr:disabled="!validPhone">
         <i class="fa fa-fw fa-phone"
           v-bind:class="[ onPhone ? 'fa-close': 'fa-phone' ]"></i>
       </button>
@@ -66,40 +66,40 @@
     <!-- DTMF Tone interface -->
     <div class="keys">
       <div class="key-row">
-        <button class="btn btn-circle btn-default">1</button>
-        <button class="btn btn-circle btn-default">2
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('1')">1</button>
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('2')">2
           <span>A B C</span>
         </button>
-        <button class="btn btn-circle btn-default">3
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('3')">3
           <span>D E F</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default">4
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('4')">4
           <span>G H I</span>
         </button>
-        <button class="btn btn-circle btn-default">5
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('5')">5
           <span>J K L</span>
         </button>
-        <button class="btn btn-circle btn-default">6
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('6')">6
           <span>M N O</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default">7
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('7')">7
           <span>P Q R S</span>
         </button>
-        <button class="btn btn-circle btn-default">8
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('8')">8
           <span>T U V</span>
         </button>
-        <button class="btn btn-circle btn-default">9
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('9')">9
           <span>W X Y Z</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default">*</button>
-        <button class="btn btn-circle btn-default">0</button>
-        <button class="btn btn-circle btn-default">#</button>
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('*')">*</button>
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('0')">0</button>
+        <button class="btn btn-circle btn-default" v-on:click="appendDigit('#')">#</button>
       </div>
     </div>
 
