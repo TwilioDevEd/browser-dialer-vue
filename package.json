@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test TWILIO_ACCOUNT_SID=my-account-sid TWILIO_AUTH_TOKEN=my-auth-token TWILIO_NUMBER=my-twilio-number TWILIO_TWIML_APP_SID=app-sid ./node_modules/mocha/bin/mocha spec --recursive"
   },
   "author": "Twilio DevEd",
   "license": "MIT",
@@ -13,5 +13,11 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "twilio": "^2.11.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
+    "mocha": "^3.1.0",
+    "supertest": "^2.0.0"
   }
 }

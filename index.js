@@ -44,3 +44,5 @@ let port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Express Server listening on *:${port}`);
 });
+
+module.exports = app;
