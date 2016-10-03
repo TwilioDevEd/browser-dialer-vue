@@ -57,7 +57,7 @@
           v-bind:class="[ onPhone ? 'fa-close': 'fa-phone' ]"></i>
       </button>
 
-      <button class="btn btn-circle btn-default" v-if="onPhone">
+      <button class="btn btn-circle btn-default" v-if="onPhone" v-on:click="toggleMute">
         <i class="fa fa-fw"
           v-bind:class="[ muted ? 'fa-microphone-slash': 'fa-microphone' ]"></i>
       </button>

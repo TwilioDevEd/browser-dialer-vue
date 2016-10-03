@@ -76,12 +76,8 @@ new Vue({
     // Handle muting
     toggleMute: function() {
       this.muted = !this.muted;
-      var curr = Twilio.Device.currentConnection();
-      if (this.muted) {
-        curr.mute();
-      } else {
-        curr.unmute();
-      }
+
+      Twilio.Device.activeConnection().mute(this.muted);
     },
 
     // Make an outbound call with the current number,
