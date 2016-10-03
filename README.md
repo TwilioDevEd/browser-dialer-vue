@@ -56,7 +56,7 @@
    this:
 
    ```
-   http://<your-ngrok-subdomaon/voice
+   http://<your-ngrok-subdomain/voice
    ```
 
 ## Meta
