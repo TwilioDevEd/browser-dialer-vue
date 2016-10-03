@@ -3,6 +3,7 @@
 </a>
 
 # Browser Dialer - Vue.js
+[![Build Status](https://travis-ci.org/TwilioDevEd/browser-dialer-vue.svg?branch=master)](https://travis-ci.org/TwilioDevEd/browser-dialer-vue)
 
 ### Prerequisites
 
@@ -43,6 +44,20 @@
   ```bash
   $ npm start
   ```
+
+1. Expose the application to the wider Internet using [ngrok](https://ngrok.com/).
+
+   ```bash
+   $ ngrok http 3000
+   ```
+
+   Once you have started ngrok, update your App voice URL
+   setting to use your ngrok hostname. It will look something like
+   this:
+
+   ```
+   http://<your-ngrok-subdomaon/voice
+   ```
 
 ## Meta
 
