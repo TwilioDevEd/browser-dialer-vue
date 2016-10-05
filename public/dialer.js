@@ -48,13 +48,14 @@ new Vue({
     Twilio.Device.disconnect(function() {
       self.onPhone = false;
       self.connection = null;
+      self.log = 'Call ended.';
     });
   },
 
   computed: {
     // Computed property to validate the current phone number
     validPhone: function() {
-      return /^([0-9]|#|\*)+$/.test(this.currentNumber);
+      return /^([0-9]|#|\*)+$/.test(this.currentNumber.replace(/[-()\s]/g,''));
     }
   },
 
@@ -67,7 +68,6 @@ new Vue({
     // Handle muting
     toggleMute: function() {
       this.muted = !this.muted;
-
       Twilio.Device.activeConnection().mute(this.muted);
     },
 
