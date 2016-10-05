@@ -35,8 +35,8 @@
         </button>
         <ul class="dropdown-menu">
           <li v-for="country in countries">
-            <a href="#" v-on:click.prevent="selectCountry(country)">
-              <div class="flag flag-{{ country.code }}"></div>
+            <a href="#" @click.prevent="selectCountry(country)">
+              <div :class="'flag flag-' + country.code"></div>
               <span>{{ country.name }} (+{{ country.cc }})</span>
             </a>
           </li>
@@ -50,56 +50,56 @@
 
     <!-- Audio Controls -->
     <div class="controls">
-      <button class="btn btn-circle" v-on:click="toggleCall()"
-        v-bind:class="[ onPhone ? 'btn-danger': 'btn-success' ]"
-        v-attr:disabled="!validPhone">
+      <button class="btn btn-circle" @click="toggleCall()"
+        :class="[ onPhone ? 'btn-danger': 'btn-success' ]"
+        :disabled="!validPhone">
         <i class="fa fa-fw fa-phone"
-          v-bind:class="[ onPhone ? 'fa-close': 'fa-phone' ]"></i>
+          :class="[ onPhone ? 'fa-close': 'fa-phone' ]"></i>
       </button>
 
-      <button class="btn btn-circle btn-default" v-if="onPhone" v-on:click="toggleMute">
+      <button class="btn btn-circle btn-default" v-if="onPhone" @click="toggleMute">
         <i class="fa fa-fw"
-          v-bind:class="[ muted ? 'fa-microphone-slash': 'fa-microphone' ]"></i>
+          :class="[ muted ? 'fa-microphone-slash': 'fa-microphone' ]"></i>
       </button>
     </div>
 
     <!-- DTMF Tone interface -->
-    <div class="keys">
+    <div class="keys" v-if="connection" v-cloak>
       <div class="key-row">
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('1')">1</button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('2')">2
+        <button class="btn btn-circle btn-default" @click="sendDigit('1')">1</button>
+        <button class="btn btn-circle btn-default" @click="sendDigit('2')">2
           <span>A B C</span>
         </button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('3')">3
+        <button class="btn btn-circle btn-default" @click="sendDigit('3')">3
           <span>D E F</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('4')">4
+        <button class="btn btn-circle btn-default" @click="sendDigit('4')">4
           <span>G H I</span>
         </button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('5')">5
+        <button class="btn btn-circle btn-default" @click="sendDigit('5')">5
           <span>J K L</span>
         </button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('6')">6
+        <button class="btn btn-circle btn-default" @click="sendDigit('6')">6
           <span>M N O</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('7')">7
+        <button class="btn btn-circle btn-default" @click="sendDigit('7')">7
           <span>P Q R S</span>
         </button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('8')">8
+        <button class="btn btn-circle btn-default" @click="sendDigit('8')">8
           <span>T U V</span>
         </button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('9')">9
+        <button class="btn btn-circle btn-default" @click="sendDigit('9')">9
           <span>W X Y Z</span>
         </button>
       </div>
       <div class="key-row">
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('*')">*</button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('0')">0</button>
-        <button class="btn btn-circle btn-default" v-on:click="appendDigit('#')">#</button>
+        <button class="btn btn-circle btn-default" @click="sendDigit('*')">*</button>
+        <button class="btn btn-circle btn-default" @click="sendDigit('0')">0</button>
+        <button class="btn btn-circle btn-default" @click="sendDigit('#')">#</button>
       </div>
     </div>
 
@@ -110,7 +110,7 @@
 
   <script src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/vue/1.0.27/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="dialer.js"></script>
 </body>

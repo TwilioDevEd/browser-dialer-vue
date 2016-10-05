@@ -1,16 +1,5 @@
 (function() {
 
-// Custom directive to conditionally add/remove DOM attribute
-Vue.directive('attr', {
-  update: function(value) {
-    if (value) {
-      this.el.setAttribute(this.arg, 'true');
-    } else {
-      this.el.removeAttribute(this.arg);
-    }
-  }
-});
-
 new Vue({
   // Specify element for the dialer control
   el: '#dialer',
@@ -36,7 +25,8 @@ new Vue({
       { name: 'Singapore', cc: '65', code: 'sg' },
       { name: 'Spain', cc: '34', code: 'es' },
       { name: 'Brazil', cc: '55', code: 'br' },
-    ]
+    ],
+    connection: null
   },
 
   // Initialize after component creation
@@ -57,6 +47,7 @@ new Vue({
     // Configure event handlers for Twilio Device
     Twilio.Device.disconnect(function() {
       self.onPhone = false;
+      self.connection = null;
     });
   },
 
@@ -88,7 +79,7 @@ new Vue({
         this.onPhone = true;
         // make outbound call with current number
         var n = '+' + this.countryCode + this.currentNumber.replace(/\D/g, '');
-        Twilio.Device.connect({ number: n });
+        this.connection = Twilio.Device.connect({ number: n });
         this.log = 'Calling ' + n;
       } else {
         // hang up call in progress
@@ -97,14 +88,10 @@ new Vue({
     },
 
     // Handle numeric buttons
-    appendDigit: function(digit) {
-      this.currentNumber += digit;
+    sendDigit: function(digit) {
+      this.connection.sendDigits(digit);
+    },
 
-      var conn = Twilio.Device.activeConnection();
-      if (conn && conn.status() == 'open') {
-        conn.sendDigits(digit);
-      }
-    }
   }
 });
 
