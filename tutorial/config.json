@@ -1,0 +1,6 @@
+{
+    "title": "Browser Dialer with Twilio and Vue.js",
+    "repo": "TwilioDevEd/browser-dialer-vue",
+    "description": "Learn to implement a browser dialer application using the Twilio.js library and Vue.js",
+    "heroku": false
+}
