@@ -11,7 +11,6 @@ new Vue({
     currentNumber: '',
     muted: false,
     onPhone: false,
-    identity: '',
     log: 'Connecting...',
     countries: [
       { name: 'United States', cc: '1', code: 'us' },
@@ -35,10 +34,8 @@ new Vue({
 
     // Fetch Twilio capability token from our Node.js server
     $.getJSON('/token').done(function(data) {
-      self.identity = data.identity;
       Twilio.Device.setup(data.token);
-      self.log = 'Connected with generated client name "'
-        + self.identity + '"';
+      self.log = 'Connected'
     }).fail(function(err) {
       console.log(err);
       self.log = 'Could not fetch token, see console.log';

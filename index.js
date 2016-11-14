@@ -4,7 +4,6 @@ const http = require('http');
 const express = require('express');
 const { urlencoded } = require('body-parser');
 const twilio = require('twilio');
-const randomUsername = require('./randos');
 
 let app = express();
 app.use(express.static(__dirname + '/public'));
@@ -12,19 +11,15 @@ app.use(urlencoded({ extended: false }));
 
 // Generate a Twilio Client capability token
 app.get('/token', (request, response) => {
-  let identity = randomUsername();
-  
   let capability = new twilio.Capability(
     process.env.TWILIO_ACCOUNT_SID,
     process.env.TWILIO_AUTH_TOKEN
   );
   capability.allowClientOutgoing(process.env.TWILIO_TWIML_APP_SID);
-  capability.allowClientIncoming(identity);
   let token = capability.generate();
 
-  // Include identity and token in a JSON response
+  // Include token in a JSON response
   response.send({
-    identity: identity,
     token: token
   });
 });
