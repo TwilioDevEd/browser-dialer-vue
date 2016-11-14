@@ -1,0 +1,46 @@
+.step(
+  data-title='What Does This Thing Do?'
+  data-file='index.js')
+  :markdown
+    ## What Does This Thing Do?
+
+    This application allows you to make a call from your browser. It has the
+    following main features:
+
+    1. You can mute/unmute your audio.
+    1. Send DTMF touch tones by pressing the key pad.
+
+    This tutorial highlights the key bits of code that make this application
+    work. [Check out the project README on GitHub](https://github.com/TwilioDevEd/browser-dialer-vue)
+    to see how to run the code yourself.
+
+    Let's get started.
+
+    ---
+
+    **See also:**
+
+    - [Dual-Tone Multi-Frecuency Signaling](//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling)
+
+.step(
+  data-title='Generate a Capability Token'
+  data-file='index.js',
+  data-highlight='13-25')
+  :markdown
+    ## Generate a Capability Token
+
+    The Twilio.js Client requires a capability token to work. The capability
+    token give our browser an identity and grant it privileges to make an
+    outbound call.
+
+    We use the [Twilio Node Helper Library](//www.twilio.com/docs/libraries/node)
+    to generate and configure our capability token.
+    We have to configure a capability token with the SID of a Twilio
+    Application to allow outgoing calls.
+
+    ---
+
+    **See also:**
+    - [Twilio Client: Capability Tokens](//www.twilio.com/docs/api/client/capability-tokens)
+    - [Capability Tokens: Allow Outgoing Connections](//www.twilio.com/docs/api/client/capability-tokens#allow-outgoing-connections)
+
