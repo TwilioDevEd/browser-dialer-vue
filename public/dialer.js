@@ -35,17 +35,20 @@ new Vue({
     // Fetch Twilio capability token from our Node.js server
     $.getJSON('/token').done(function(data) {
       Twilio.Device.setup(data.token);
-      self.log = 'Connected'
     }).fail(function(err) {
       console.log(err);
       self.log = 'Could not fetch token, see console.log';
-    })
+    });
 
     // Configure event handlers for Twilio Device
     Twilio.Device.disconnect(function() {
       self.onPhone = false;
       self.connection = null;
       self.log = 'Call ended.';
+    });
+
+    Twilio.Device.ready(function() {
+      self.log = 'Connected';
     });
   },
 
