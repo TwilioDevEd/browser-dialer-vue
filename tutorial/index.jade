@@ -44,3 +44,52 @@
     - [Twilio Client: Capability Tokens](//www.twilio.com/docs/api/client/capability-tokens)
     - [Capability Tokens: Allow Outgoing Connections](//www.twilio.com/docs/api/client/capability-tokens#allow-outgoing-connections)
 
+.step(
+  data-title='Set Up the Twilio Device'
+  data-file='public/dialer.js',
+  data-highlight='35-42, 50-52')
+  :markdown
+    ## Set Up the Twilio Device
+
+    First of all, we have to [include the Twilio.js library](//www.twilio.com/docs/api/client/twilio-js#including-js).
+
+    We retrieve the capability token from the route **/token** with a POST
+    request. The token is required to intialize the `Twilio.Device` will
+    activate the device granting privileges to make an outbound call. The
+    initialization is done by passing the capability token to
+    `Twilio.Device.setup`.
+
+    The `Twilio.Device.ready` callback serves to notify when the device is ready
+    to make calls.
+
+    ---
+
+    **See also:**
+    - [Twilio.Device.setup](//www.twilio.com/docs/api/client/device#setup)
+    - [Twilio.Device.ready](//www.twilio.com/docs/api/client/device#ready)
+
+.step(
+  data-title='Make a Call'
+  data-file='public/dialer.js',
+  data-highlight='80-82')
+  :markdown
+    ## Make a Call
+
+    First we have to build the phone number. It requires a **+** sign, then a
+    country code and finally the actual number.
+
+    We use `Twilio.Device.connect` to make an outbound call. In this
+    implementation we pass the phone number as a parameter to the Twilio
+    application associated with this device's capability token.
+
+    ---
+
+    **See also:**
+    - [Twilio.Device.connect](//www.twilio.com/docs/api/client/device#connect)
+
+.step(
+  data-title='Mute and Unmute an Active Call'
+  data-file='public/dialer.js',
+  data-highlight='68-72')
+  :markdown
+    ## Mute and Unmute an Active Call
