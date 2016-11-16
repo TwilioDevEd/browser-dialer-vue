@@ -20,7 +20,7 @@
 
     **See also:**
 
-    - [Dual-Tone Multi-Frecuency Signaling](//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling)
+    - [Dual-Tone Multi-Frequency Signaling](//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling)
 
 .step(
   data-title='Generate a Capability Token'
@@ -54,7 +54,7 @@
     First of all, we have to [include the Twilio.js library](//www.twilio.com/docs/api/client/twilio-js#including-js).
 
     We retrieve the capability token from the route **/token** with a POST
-    request. The token is required to intialize the `Twilio.Device` will
+    request. The token is required to initialize the `Twilio.Device` will
     activate the device granting privileges to make an outbound call. The
     initialization is done by passing the capability token to
     `Twilio.Device.setup`.
@@ -93,3 +93,65 @@
   data-highlight='68-72')
   :markdown
     ## Mute and Unmute an Active Call
+
+    Sometimes you want to _mute or unmute_ the current call, let's take a look at
+    how to implement it.
+
+    First we have to get the active connection object `Twilio.Connection`, this
+    object represents a call from or to Twilio. To get this object we can rely
+    on `Twilio.Devive.activeConnection`. Once we have the connection object we
+    can use the `mute` method to _mute or unmute_ the active call.
+
+    ---
+
+    **See also:**
+    - [Twilio.Device.activeConnection](//www.twilio.com/docs/api/client/device#activeconnection)
+    - [Twilio.Connection.mute](//www.twilio.com/docs/api/client/connection#mute)
+
+.step(
+  data-title='Send DTMF Tones'
+  data-file='public/dialer.js',
+  data-highlight='90-93')
+  :markdown
+    ## Send DTMF Tones
+
+    DTMF stands for "Dual-tone multi-frequency signaling" and are the familiar
+    sounds you hear when dialing a phone. DTMF have been standardized so that
+    they can be understood and decoded by machines.
+
+    To play DTMF tones with the Twilio.js client library we can make use of
+    `sendDigits` which as you might expect plays DTMF tones depending on the
+    parameter you pass to it.
+
+    ---
+    **See also:**
+    - [Twilio.Connection.sendDigits](//www.twilio.com/docs/api/client/connection#sendDigits)
+    - [Interactive Voice Response](//en.wikipedia.org/wiki/Interactive_voice_response)
+
+.step(
+  data-title='Hang up the Call'
+  data-file='public/dialer.js',
+  data-highlight='85-86')
+  :markdown
+    ## Hang up the Call
+
+    We're about to finish this tutorial. The last step is to learn how to hang
+    up an active call.
+
+    To solve this problem we use `Twilio.Device.disconnectAll` which terminates the
+    current call.
+
+    ---
+    **See also:**
+    - [Twilio.Device.disconnectAll](https://www.twilio.com/docs/api/client/device#disconnect-all)
+
+.step(data-title='Where to Next?')
+  :markdown
+    ## Where to Next?
+
+    That's it! We crafted an application that allows us to make
+    browser-to-phone calls using Twilio.js
+
+    Thanks for checking this tutorial out! If you have any feedback to share
+    with us, we'd love to hear it. [Contact the Twilio Developer Education
+    Team](mailto:deved-oss@twilio.com) to let us know what you think.
