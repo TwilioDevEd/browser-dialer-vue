@@ -18,6 +18,7 @@ browser phone to have:</p>
 <li>Mute and unmute microphone input</li>
 <li>Send DTMF touch tones using the HTML key pad</li>
 </ol>
+<p><img src="//howtodocs.s3.amazonaws.com/browser-dialer.png" alt="Browser Dialer"></p>
 <p>This tutorial highlights the key bits of code that make this application
 work. <a href="https://github.com/TwilioDevEd/browser-dialer-vue">Check out the project README on GitHub</a>
 to see how to run the code yourself.</p>
@@ -28,7 +29,20 @@ to see how to run the code yourself.</p>
 <li><a href="//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">Dual-Tone Multi-Frequency Signaling</a></li>
 </ul>
 </div><div data-title="Create a Twilio Application" data-file="index.js" class="step"><h2 id="create-a-twilio-application">Create a Twilio Application</h2>
-<p>(insert prose about using the Console to create a Twilio application here)</p>
+<p>This application requires a TwiML application to make a phone call, in this
+step we&#39;ll show you how to create it.</p>
+<p>To create a TwiML App open you
+<a href="//www.twilio.com/console/phone-numbers/dev-tools/twiml-apps">Console</a> and
+click the button &quot;Create new TwiML App&quot;.</p>
+<p><img src="//howtodocs.s3.amazonaws.com/new-twiml-app.png" alt="New Twiml App"></p>
+<p>Any TwiML application requires a friendly name. Depending on your needs you
+might want to set a Request URL for voice or messaging. For further
+guidance you can take a look at <a href="https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-">how do I create a TwiML App?</a></p>
+<hr>
+<p><strong>See also:</strong></p>
+<ul>
+<li><a href="//www.twilio.com/docs/api/rest/applications">REST API: Applications</a></li>
+</ul>
 </div><div data-title="Generate a Capability Token" data-file="index.js" data-highlight="13-25" class="step"><h2 id="generate-a-capability-token">Generate a Capability Token</h2>
 <p>Before our users can make any calls in their browsers, we need to create a
 capability token for them.</p>
@@ -45,7 +59,7 @@ Application to allow outgoing calls.</p>
 <li><a href="//www.twilio.com/docs/api/client/capability-tokens#allow-outgoing-connections">Capability Tokens: Allow Outgoing Connections</a></li>
 </ul>
 </div><div data-title="Set Up the Twilio Device" data-file="public/dialer.js" data-highlight="35-42, 50-52" class="step"><h2 id="set-up-the-twilio-device">Set Up the Twilio Device</h2>
-<p>In our client-side code, we start by <a href="//www.twilio.com/docs/api/client/twilio-js#including-js">including the Twilio.js library</a>.</p>
+<p>In our client-side code we start by <a href="//www.twilio.com/docs/api/client/twilio-js#including-js">including the Twilio.js library</a>.</p>
 <p>We then retrieve the capability token from the route <strong>/token</strong> with a POST
 request using jQuery.</p>
 <p>Lastly, we pass our token to <code>Twilio.Device.setup()</code> to finish the setup.</p>
@@ -76,7 +90,7 @@ looking for instructions on how to handle the call.</p>
 <li><a href="//www.twilio.com/docs/api/client/device#connect">Twilio.Device.connect</a></li>
 </ul>
 </div><div data-title="Mute and Unmute an Active Call" data-file="public/dialer.js" data-highlight="68-72" class="step"><h2 id="mute-and-unmute-an-active-call">Mute and Unmute an Active Call</h2>
-<p>Sometimes you want to <em>mute or unmute</em> the current call, halting input
+<p>Sometimes you want to mute or unmute the current call, halting input
 from the user&#39;s microphone.</p>
 <p>We can use <code>Twilio.Device.activeConnection()</code> to get the active call,
 and then call its <code>mute()</code> method to mute or unmute the user&#39;s microphone.</p>

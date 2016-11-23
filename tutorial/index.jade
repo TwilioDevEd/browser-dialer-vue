@@ -13,6 +13,8 @@
     1. Mute and unmute microphone input
     1. Send DTMF touch tones using the HTML key pad
 
+    ![Browser Dialer](//howtodocs.s3.amazonaws.com/browser-dialer.png)
+
     This tutorial highlights the key bits of code that make this application
     work. [Check out the project README on GitHub](https://github.com/TwilioDevEd/browser-dialer-vue)
     to see how to run the code yourself.
@@ -31,7 +33,24 @@
   :markdown
     ## Create a Twilio Application
 
-    (insert prose about using the Console to create a Twilio application here)
+    This application requires a TwiML application to make a phone call, in this
+    step we'll show you how to create it.
+
+    To create a TwiML App open you
+    [Console](//www.twilio.com/console/phone-numbers/dev-tools/twiml-apps) and
+    click the button "Create new TwiML App".
+
+    ![New Twiml App](//howtodocs.s3.amazonaws.com/new-twiml-app.png)
+
+    Any TwiML application requires a friendly name. Depending on your needs you
+    might want to set a Request URL for voice or messaging. For further
+    guidance you can take a look at [how do I create a TwiML App?](https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-)
+
+    ---
+
+    **See also:**
+    - [REST API: Applications](//www.twilio.com/docs/api/rest/applications)
+
 
 .step(
   data-title='Generate a Capability Token'
