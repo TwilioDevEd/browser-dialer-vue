@@ -10,11 +10,13 @@
   height:100%;
   width:100%;
 }</style><link rel="shortcut icon" href="//twilio.com/bundles/marketing/img/favicons/favicon.ico"><link rel="apple-touch-icon" href="//twilio.com/bundles/marketing/img/favicons/favicon_57.png"><link rel="apple-touch-icon" sizes="72x72" href="//twilio.com/bundles/marketing/img/favicons/favicon_72.png"><link rel="apple-touch-icon" sizes="114x114" href="//twilio.com/bundles/marketing/img/favicons/favicon_114.png"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"><link rel="stylesheet" href="viewsaurus.css"></head><body><div class="wrapper"><div id="viewsaurus" data-title="Browser Dialer with Twilio and Vue.js"><div class="saurus-panes"><div class="saurus-prose"><div class="saurus-prose-header"><div class="title-outer"><span class="step-title">Browser Dialer with Twilio and Vue.js</span></div></div><div class="saurus-nav-buttons"><div class="saurus-nav-button nav-overview"><div class="saurus-nav-button-inner"><i class="fa fa-fw fa-list"></i></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-previous"><div class="saurus-nav-button-inner"><a href=""> <i class="fa fa-fw fa-play fa-rotate-180"></i></a></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-next clickable"><div class="saurus-nav-button-inner"><a href="#1"> <i class="fa fa-fw fa-play"></i></a></div></div><div class="saurus-next-title"><span class="next-title-inner"></span></div></div><div class="saurus-progress-bar"></div><div class="saurus-start"><p>Learn to implement a browser dialer application using the Twilio.js library and Vue.js</p><a href="#0">Start Tutorial</a></div><div class="saurus-content"><div data-title="What Does This Thing Do?" data-file="index.js" class="step"><h2 id="what-does-this-thing-do-">What Does This Thing Do?</h2>
-<p>This application allows you to make a call from your browser. It has the
-following main features:</p>
+<p>This application allows you to make a phone call from your browser using
+<a href="https://www.twilio.com/client">Twilio Client</a>.</p>
+<p>It also includes a couple other standard features you would expect a
+browser phone to have:</p>
 <ol>
-<li>You can mute/unmute your audio.</li>
-<li>Send DTMF touch tones by pressing the key pad.</li>
+<li>Mute and unmute microphone input</li>
+<li>Send DTMF touch tones using the HTML key pad</li>
 </ol>
 <p>This tutorial highlights the key bits of code that make this application
 work. <a href="https://github.com/TwilioDevEd/browser-dialer-vue">Check out the project README on GitHub</a>
@@ -25,11 +27,16 @@ to see how to run the code yourself.</p>
 <ul>
 <li><a href="//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">Dual-Tone Multi-Frequency Signaling</a></li>
 </ul>
+</div><div data-title="Create a Twilio Application" data-file="index.js" class="step"><h2 id="create-a-twilio-application">Create a Twilio Application</h2>
+<p>(insert prose about using the Console to create a Twilio application here)</p>
 </div><div data-title="Generate a Capability Token" data-file="index.js" data-highlight="13-25" class="step"><h2 id="generate-a-capability-token">Generate a Capability Token</h2>
-<p>The Twilio.js Client requires a capability token in order to work. The
-capability token grant privileges to our browser to make an outbound call.</p>
+<p>Before our users can make any calls in their browsers, we need to create a
+capability token for them.</p>
+<p>Capability tokens are your way to control exactly what your users can and
+can&#39;t do with Twilio Client. In this case, our server will provide all users
+with tokens that allow them to make outbound phone calls.</p>
 <p>We use the <a href="//www.twilio.com/docs/libraries/node">Twilio Node Helper Library</a>
-to generate and configure a capability token with the SID of a Twilio
+to generate and configure a capability token with the SID of our Twilio
 Application to allow outgoing calls.</p>
 <hr>
 <p><strong>See also:</strong></p>
@@ -38,13 +45,11 @@ Application to allow outgoing calls.</p>
 <li><a href="//www.twilio.com/docs/api/client/capability-tokens#allow-outgoing-connections">Capability Tokens: Allow Outgoing Connections</a></li>
 </ul>
 </div><div data-title="Set Up the Twilio Device" data-file="public/dialer.js" data-highlight="35-42, 50-52" class="step"><h2 id="set-up-the-twilio-device">Set Up the Twilio Device</h2>
-<p>First of all, we have to <a href="//www.twilio.com/docs/api/client/twilio-js#including-js">include the Twilio.js library</a>.</p>
-<p>We retrieve the capability token from the route <strong>/token</strong> with a POST
-request. The token is required to initialize the <code>Twilio.Device</code>. It will
-activate the device granting privileges to make an outbound call. The
-initialization is done by passing the capability token to
-<code>Twilio.Device.setup</code>.</p>
-<p>The <code>Twilio.Device.ready</code> callback is used to notify when the device is
+<p>In our client-side code, we start by <a href="//www.twilio.com/docs/api/client/twilio-js#including-js">including the Twilio.js library</a>.</p>
+<p>We then retrieve the capability token from the route <strong>/token</strong> with a POST
+request using jQuery.</p>
+<p>Lastly, we pass our token to <code>Twilio.Device.setup()</code> to finish the setup.</p>
+<p>The <code>Twilio.Device.ready</code> callback is used to notify us when the device is
 ready to make calls.</p>
 <hr>
 <p><strong>See also:</strong></p>
@@ -53,23 +58,28 @@ ready to make calls.</p>
 <li><a href="//www.twilio.com/docs/api/client/device#ready">Twilio.Device.ready</a></li>
 </ul>
 </div><div data-title="Make a Call" data-file="public/dialer.js" data-highlight="80-82" class="step"><h2 id="make-a-call">Make a Call</h2>
-<p>We have to build the phone number. It requires a <strong>+</strong> sign, then a
-country code and the actual number.</p>
-<p>We use <code>Twilio.Device.connect</code> to make an call. In this
-implementation we pass the phone number as a parameter to the Twilio
-application associated with this device&#39;s capability token.</p>
+<p>Now that Twilio Client is ready, our users can start making phone calls.
+They&#39;ll start by inputting the phone number they wish to call.</p>
+<p>We massage that input before passing the number on to Twilio, adding a <strong>+</strong>
+sign, then a country code, and the actual number. This is called the
+<a href="https://en.wikipedia.org/wiki/E.164">E.164</a> format and is required by most
+parts of Twilio&#39;s API.</p>
+<p>We then use <code>Twilio.Device.connect</code> to start the call. Twilio will send a
+request to the URL you specified in your Twilio Application configuration,
+looking for instructions on how to handle the call.</p>
+<p>In this case, we include the phone number the user wishes to dial in our
+<code>connect()</code> call, and we then access it in
+<a href="https://github.com/TwilioDevEd/browser-dialer-vue/blob/master/index.js#L27-L35">our server-side code here</a>.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
 <li><a href="//www.twilio.com/docs/api/client/device#connect">Twilio.Device.connect</a></li>
 </ul>
 </div><div data-title="Mute and Unmute an Active Call" data-file="public/dialer.js" data-highlight="68-72" class="step"><h2 id="mute-and-unmute-an-active-call">Mute and Unmute an Active Call</h2>
-<p>Sometimes you want to <em>mute or unmute</em> the current call, let&#39;s take a look at
-how to implement it.</p>
-<p>We have to get the active connection object (<code>Twilio.Connection</code>), this
-object represents a call to or from Twilio.</p>
-<p>To get this object we can rely on <code>Twilio.Device.activeConnection</code>. Once we
-have it we can use the <code>mute</code> method to <em>mute or unmute</em> the active call.</p>
+<p>Sometimes you want to <em>mute or unmute</em> the current call, halting input
+from the user&#39;s microphone.</p>
+<p>We can use <code>Twilio.Device.activeConnection()</code> to get the active call,
+and then call its <code>mute()</code> method to mute or unmute the user&#39;s microphone.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
@@ -77,12 +87,14 @@ have it we can use the <code>mute</code> method to <em>mute or unmute</em> the a
 <li><a href="//www.twilio.com/docs/api/client/connection#mute">Twilio.Connection.mute</a></li>
 </ul>
 </div><div data-title="Send DTMF Tones" data-file="public/dialer.js" data-highlight="90-93" class="step"><h2 id="send-dtmf-tones">Send DTMF Tones</h2>
+<p>If our user calls an automated phone system, they might need to navigate
+a menu system using our phone&#39;s keypad and DTMF tones.</p>
 <p>DTMF stands for &quot;Dual-tone multi-frequency signaling&quot; and are the familiar
-sounds you hear when dialing a phone. DTMF have been standardized so that
+sounds you hear when dialing a phone. DTMF have been standardized so
 they can be understood and decoded by machines.</p>
-<p>To play DTMF tones with the Twilio.js client library we can make use of
-<code>sendDigits</code>, this method plays DTMF tones depending on the parameter you
-pass to it.</p>
+<p>To play DTMF tones with the Twilio.js client library we use the
+<code>sendDigits</code> method, passing which digit the user pressed as our sole
+argument.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
@@ -90,9 +102,8 @@ pass to it.</p>
 <li><a href="//en.wikipedia.org/wiki/Interactive_voice_response">Interactive Voice Response</a></li>
 </ul>
 </div><div data-title="Hang up the Call" data-file="public/dialer.js" data-highlight="85-86" class="step"><h2 id="hang-up-the-call">Hang up the Call</h2>
-<p>We&#39;re about to finish this tutorial. The last step is to learn how to hang
-up an active call.</p>
-<p>To achive this we use <code>Twilio.Device.disconnectAll</code> which terminates the
+<p>Lastly, our users should be able to end a call.</p>
+<p>To achive this we use <code>Twilio.Device.disconnectAll</code>, which terminates the
 current call.</p>
 <hr>
 <p><strong>See also:</strong></p>
@@ -100,11 +111,11 @@ current call.</p>
 <li><a href="https://www.twilio.com/docs/api/client/device#disconnect-all">Twilio.Device.disconnectAll</a></li>
 </ul>
 </div><div data-title="Where to Next?" class="step"><h2 id="where-to-next-">Where to Next?</h2>
-<p>That&#39;s it! We crafted an application that allows us to make
-browser-to-phone calls using Twilio.js</p>
-<p>Thanks for checking out this tutorial ! If you have any feedback to share
-with us, we&#39;d love to hear it. <a href="mailto:deved-oss@twilio.com">Contact the Twilio Developer Education
-Team</a> to let us know what you think.</p>
+<p>That&#39;s it! We crafted an application that allows our users to make
+browser-to-phone calls using Twilio.js.</p>
+<p>If you have any feedback to share with us, we&#39;d love to hear it.
+<a href="mailto:deved-oss@twilio.com">Contact the Twilio Developer Education Team</a>
+to let us know what you think.</p>
 </div>
 <div class="saurus-files" style="display:none;"><textarea class="saurus-file" data-file="index.js" data-mode="javascript">J3VzZSBzdHJpY3QnOwoKY29uc3QgaHR0cCA9IHJlcXVpcmUoJ2h0dHAnKTsKY29uc3QgZXhwcmVzcyA9IHJlcXVpcmUoJ2V4cHJlc3MnKTsKY29uc3QgeyB1cmxlbmNvZGVkIH0gPSByZXF1aXJlKCdib2R5LXBhcnNlcicpOwpjb25zdCB0d2lsaW8gPSByZXF1aXJlKCd0d2lsaW8nKTsKCmxldCBhcHAgPSBleHByZXNzKCk7CmFwcC51c2UoZXhwcmVzcy5zdGF0aWMoX19kaXJuYW1lICsgJy9wdWJsaWMnKSk7CmFwcC51c2UodXJsZW5jb2RlZCh7IGV4dGVuZGVkOiBmYWxzZSB9KSk7CgovLyBHZW5lcmF0ZSBhIFR3aWxpbyBDbGllbnQgY2FwYWJpbGl0eSB0b2tlbgphcHAuZ2V0KCcvdG9rZW4nLCAocmVxdWVzdCwgcmVzcG9uc2UpID0+IHsKICBsZXQgY2FwYWJpbGl0eSA9IG5ldyB0d2lsaW8uQ2FwYWJpbGl0eSgKICAgIHByb2Nlc3MuZW52LlRXSUxJT19BQ0NPVU5UX1NJRCwKICAgIHByb2Nlc3MuZW52LlRXSUxJT19BVVRIX1RPS0VOCiAgKTsKICBjYXBhYmlsaXR5LmFsbG93Q2xpZW50T3V0Z29pbmcocHJvY2Vzcy5lbnYuVFdJTElPX1RXSU1MX0FQUF9TSUQpOwogIGxldCB0b2tlbiA9IGNhcGFiaWxpdHkuZ2VuZXJhdGUoKTsKCiAgLy8gSW5jbHVkZSB0b2tlbiBpbiBhIEpTT04gcmVzcG9uc2UKICByZXNwb25zZS5zZW5kKHsKICAgIHRva2VuOiB0b2tlbgogIH0pOwp9KTsKCi8vIENyZWF0ZSBUd2lNTCBmb3Igb3V0Ym91bmQgY2FsbHMKYXBwLnBvc3QoJy92b2ljZScsIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogIGxldCB0d2ltbCA9IG5ldyB0d2lsaW8uVHdpbWxSZXNwb25zZSgpOwogIHR3aW1sLmRpYWwocmVxdWVzdC5ib2R5Lm51bWJlciwgewogICAgY2FsbGVySWQ6IHByb2Nlc3MuZW52LlRXSUxJT19OVU1CRVIKICB9KTsKICByZXNwb25zZS50eXBlKCd0ZXh0L3htbCcpOwogIHJlc3BvbnNlLnNlbmQodHdpbWwudG9TdHJpbmcoKSk7Cn0pOwoKbGV0IHNlcnZlciA9IGh0dHAuY3JlYXRlU2VydmVyKGFwcCk7CmxldCBwb3J0ID0gcHJvY2Vzcy5lbnYuUE9SVCB8fCAzMDAwOwpzZXJ2ZXIubGlzdGVuKHBvcnQsICgpID0+IHsKICBjb25zb2xlLmxvZyhgRXhwcmVzcyBTZXJ2ZXIgbGlzdGVuaW5nIG9uICo6JHtwb3J0fWApOwp9KTsKCm1vZHVsZS5leHBvcnRzID0gYXBwOwo=</textarea>
 <textarea class="saurus-file" data-file="public/dialer.js" data-mode="javascript">KGZ1bmN0aW9uKCkgewoKbmV3IFZ1ZSh7CiAgLy8gU3BlY2lmeSBlbGVtZW50IGZvciB0aGUgZGlhbGVyIGNvbnRyb2wKICBlbDogJyNkaWFsZXInLAoKICAvLyBTdGF0ZSBkYXRhIGZvciBkaWFsZXIgY29tcG9uZW50CiAgZGF0YTogewogICAgLy8gT3V0Z29pbmcgY2FsbCBjb3VudHJ5IGNvZGUKICAgIGNvdW50cnlDb2RlOiAnMScsCiAgICBjdXJyZW50TnVtYmVyOiAnJywKICAgIG11dGVkOiBmYWxzZSwKICAgIG9uUGhvbmU6IGZhbHNlLAogICAgbG9nOiAnQ29ubmVjdGluZy4uLicsCiAgICBjb3VudHJpZXM6IFsKICAgICAgeyBuYW1lOiAnVW5pdGVkIFN0YXRlcycsIGNjOiAnMScsIGNvZGU6ICd1cycgfSwKICAgICAgeyBuYW1lOiAnR3JlYXQgQnJpdGFpbicsIGNjOiAnNDQnLCBjb2RlOiAnZ2InIH0sCiAgICAgIHsgbmFtZTogJ0NvbG9tYmlhJywgY2M6ICc1NycsIGNvZGU6ICdjbycgfSwKICAgICAgeyBuYW1lOiAnRWN1YWRvcicsIGNjOiAnNTkzJywgY29kZTogJ2VjJyB9LAogICAgICB7IG5hbWU6ICdFc3RvbmlhJywgY2M6ICczNzInLCBjb2RlOiAnZWUnIH0sCiAgICAgIHsgbmFtZTogJ0dlcm1hbnknLCBjYzogJzQ5JywgY29kZTogJ2RlJyB9LAogICAgICB7IG5hbWU6ICdIb25nIEtvbmcnLCBjYzogJzg1MicsIGNvZGU6ICdoaycgfSwKICAgICAgeyBuYW1lOiAnSXJlbGFuZCcsIGNjOiAnMzUzJywgY29kZTogJ2llJyB9LAogICAgICB7IG5hbWU6ICdTaW5nYXBvcmUnLCBjYzogJzY1JywgY29kZTogJ3NnJyB9LAogICAgICB7IG5hbWU6ICdTcGFpbicsIGNjOiAnMzQnLCBjb2RlOiAnZXMnIH0sCiAgICAgIHsgbmFtZTogJ0JyYXppbCcsIGNjOiAnNTUnLCBjb2RlOiAnYnInIH0sCiAgICBdLAogICAgY29ubmVjdGlvbjogbnVsbAogIH0sCgogIC8vIEluaXRpYWxpemUgYWZ0ZXIgY29tcG9uZW50IGNyZWF0aW9uCiAgY3JlYXRlZDogZnVuY3Rpb24oKSB7CiAgICB2YXIgc2VsZiA9IHRoaXM7CgogICAgLy8gRmV0Y2ggVHdpbGlvIGNhcGFiaWxpdHkgdG9rZW4gZnJvbSBvdXIgTm9kZS5qcyBzZXJ2ZXIKICAgICQuZ2V0SlNPTignL3Rva2VuJykuZG9uZShmdW5jdGlvbihkYXRhKSB7CiAgICAgIFR3aWxpby5EZXZpY2Uuc2V0dXAoZGF0YS50b2tlbik7CiAgICB9KS5mYWlsKGZ1bmN0aW9uKGVycikgewogICAgICBjb25zb2xlLmxvZyhlcnIpOwogICAgICBzZWxmLmxvZyA9ICdDb3VsZCBub3QgZmV0Y2ggdG9rZW4sIHNlZSBjb25zb2xlLmxvZyc7CiAgICB9KTsKCiAgICAvLyBDb25maWd1cmUgZXZlbnQgaGFuZGxlcnMgZm9yIFR3aWxpbyBEZXZpY2UKICAgIFR3aWxpby5EZXZpY2UuZGlzY29ubmVjdChmdW5jdGlvbigpIHsKICAgICAgc2VsZi5vblBob25lID0gZmFsc2U7CiAgICAgIHNlbGYuY29ubmVjdGlvbiA9IG51bGw7CiAgICAgIHNlbGYubG9nID0gJ0NhbGwgZW5kZWQuJzsKICAgIH0pOwoKICAgIFR3aWxpby5EZXZpY2UucmVhZHkoZnVuY3Rpb24oKSB7CiAgICAgIHNlbGYubG9nID0gJ0Nvbm5lY3RlZCc7CiAgICB9KTsKICB9LAoKICBjb21wdXRlZDogewogICAgLy8gQ29tcHV0ZWQgcHJvcGVydHkgdG8gdmFsaWRhdGUgdGhlIGN1cnJlbnQgcGhvbmUgbnVtYmVyCiAgICB2YWxpZFBob25lOiBmdW5jdGlvbigpIHsKICAgICAgcmV0dXJuIC9eKFswLTldfCN8XCopKyQvLnRlc3QodGhpcy5jdXJyZW50TnVtYmVyLnJlcGxhY2UoL1stKClcc10vZywnJykpOwogICAgfQogIH0sCgogIG1ldGhvZHM6IHsKICAgIC8vIEhhbmRsZSBjb3VudHJ5IGNvZGUgc2VsZWN0aW9uCiAgICBzZWxlY3RDb3VudHJ5OiBmdW5jdGlvbihjb3VudHJ5KSB7CiAgICAgIHRoaXMuY291bnRyeUNvZGUgPSBjb3VudHJ5LmNjOwogICAgfSwKCiAgICAvLyBIYW5kbGUgbXV0aW5nCiAgICB0b2dnbGVNdXRlOiBmdW5jdGlvbigpIHsKICAgICAgdGhpcy5tdXRlZCA9ICF0aGlzLm11dGVkOwogICAgICBUd2lsaW8uRGV2aWNlLmFjdGl2ZUNvbm5lY3Rpb24oKS5tdXRlKHRoaXMubXV0ZWQpOwogICAgfSwKCiAgICAvLyBNYWtlIGFuIG91dGJvdW5kIGNhbGwgd2l0aCB0aGUgY3VycmVudCBudW1iZXIsCiAgICAvLyBvciBoYW5nIHVwIHRoZSBjdXJyZW50IGNhbGwKICAgIHRvZ2dsZUNhbGw6IGZ1bmN0aW9uKCkgewogICAgICBpZiAoIXRoaXMub25QaG9uZSkgewogICAgICAgIHRoaXMubXV0ZWQgPSBmYWxzZTsKICAgICAgICB0aGlzLm9uUGhvbmUgPSB0cnVlOwogICAgICAgIC8vIG1ha2Ugb3V0Ym91bmQgY2FsbCB3aXRoIGN1cnJlbnQgbnVtYmVyCiAgICAgICAgdmFyIG4gPSAnKycgKyB0aGlzLmNvdW50cnlDb2RlICsgdGhpcy5jdXJyZW50TnVtYmVyLnJlcGxhY2UoL1xEL2csICcnKTsKICAgICAgICB0aGlzLmNvbm5lY3Rpb24gPSBUd2lsaW8uRGV2aWNlLmNvbm5lY3QoeyBudW1iZXI6IG4gfSk7CiAgICAgICAgdGhpcy5sb2cgPSAnQ2FsbGluZyAnICsgbjsKICAgICAgfSBlbHNlIHsKICAgICAgICAvLyBoYW5nIHVwIGNhbGwgaW4gcHJvZ3Jlc3MKICAgICAgICBUd2lsaW8uRGV2aWNlLmRpc2Nvbm5lY3RBbGwoKTsKICAgICAgfQogICAgfSwKCiAgICAvLyBIYW5kbGUgbnVtZXJpYyBidXR0b25zCiAgICBzZW5kRGlnaXQ6IGZ1bmN0aW9uKGRpZ2l0KSB7CiAgICAgIHRoaXMuY29ubmVjdGlvbi5zZW5kRGlnaXRzKGRpZ2l0KTsKICAgIH0sCgogIH0KfSk7Cgp9KSgpOwo=</textarea>

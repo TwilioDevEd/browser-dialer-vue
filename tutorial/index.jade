@@ -4,11 +4,14 @@
   :markdown
     ## What Does This Thing Do?
 
-    This application allows you to make a call from your browser. It has the
-    following main features:
+    This application allows you to make a phone call from your browser using
+    [Twilio Client](https://www.twilio.com/client).
 
-    1. You can mute/unmute your audio.
-    1. Send DTMF touch tones by pressing the key pad.
+    It also includes a couple other standard features you would expect a
+    browser phone to have:
+
+    1. Mute and unmute microphone input
+    1. Send DTMF touch tones using the HTML key pad
 
     This tutorial highlights the key bits of code that make this application
     work. [Check out the project README on GitHub](https://github.com/TwilioDevEd/browser-dialer-vue)
@@ -23,17 +26,29 @@
     - [Dual-Tone Multi-Frequency Signaling](//en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling)
 
 .step(
+  data-title='Create a Twilio Application'
+  data-file='index.js')
+  :markdown
+    ## Create a Twilio Application
+
+    (insert prose about using the Console to create a Twilio application here)
+
+.step(
   data-title='Generate a Capability Token'
   data-file='index.js',
   data-highlight='13-25')
   :markdown
     ## Generate a Capability Token
 
-    The Twilio.js Client requires a capability token in order to work. The
-    capability token grant privileges to our browser to make an outbound call.
+    Before our users can make any calls in their browsers, we need to create a
+    capability token for them.
+
+    Capability tokens are your way to control exactly what your users can and
+    can't do with Twilio Client. In this case, our server will provide all users
+    with tokens that allow them to make outbound phone calls.
 
     We use the [Twilio Node Helper Library](//www.twilio.com/docs/libraries/node)
-    to generate and configure a capability token with the SID of a Twilio
+    to generate and configure a capability token with the SID of our Twilio
     Application to allow outgoing calls.
 
     ---
@@ -49,15 +64,14 @@
   :markdown
     ## Set Up the Twilio Device
 
-    First of all, we have to [include the Twilio.js library](//www.twilio.com/docs/api/client/twilio-js#including-js).
+    In our client-side code we start by [including the Twilio.js library](//www.twilio.com/docs/api/client/twilio-js#including-js).
 
-    We retrieve the capability token from the route **/token** with a POST
-    request. The token is required to initialize the `Twilio.Device`. It will
-    activate the device granting privileges to make an outbound call. The
-    initialization is done by passing the capability token to
-    `Twilio.Device.setup`.
+    We then retrieve the capability token from the route **/token** with a POST
+    request using jQuery.
 
-    The `Twilio.Device.ready` callback is used to notify when the device is
+    Lastly, we pass our token to `Twilio.Device.setup()` to finish the setup.
+
+    The `Twilio.Device.ready` callback is used to notify us when the device is
     ready to make calls.
 
     ---
@@ -73,12 +87,21 @@
   :markdown
     ## Make a Call
 
-    We have to build the phone number. It requires a **+** sign, then a
-    country code and the actual number.
+    Now that Twilio Client is ready, our users can start making phone calls.
+    They'll start by inputting the phone number they wish to call.
 
-    We use `Twilio.Device.connect` to make an call. In this
-    implementation we pass the phone number as a parameter to the Twilio
-    application associated with this device's capability token.
+    We massage that input before passing the number on to Twilio, adding a **+**
+    sign, then a country code, and the actual number. This is called the
+    [E.164](https://en.wikipedia.org/wiki/E.164) format and is required by most
+    parts of Twilio's API.
+
+    We then use `Twilio.Device.connect` to start the call. Twilio will send a
+    request to the URL you specified in your Twilio Application configuration,
+    looking for instructions on how to handle the call.
+
+    In this case, we include the phone number the user wishes to dial in our
+    `connect()` call, and we then access it in
+    [our server-side code here](https://github.com/TwilioDevEd/browser-dialer-vue/blob/master/index.js#L27-L35).
 
     ---
 
@@ -92,14 +115,11 @@
   :markdown
     ## Mute and Unmute an Active Call
 
-    Sometimes you want to _mute or unmute_ the current call, let's take a look at
-    how to implement it.
+    Sometimes you want to mute or unmute the current call, halting input
+    from the user's microphone.
 
-    We have to get the active connection object (`Twilio.Connection`), this
-    object represents a call to or from Twilio.
-
-    To get this object we can rely on `Twilio.Device.activeConnection`. Once we
-    have it we can use the `mute` method to _mute or unmute_ the active call.
+    We can use `Twilio.Device.activeConnection()` to get the active call,
+    and then call its `mute()` method to mute or unmute the user's microphone.
 
     ---
 
@@ -114,13 +134,16 @@
   :markdown
     ## Send DTMF Tones
 
+    If our user calls an automated phone system, they might need to navigate
+    a menu system using our phone's keypad and DTMF tones.
+
     DTMF stands for "Dual-tone multi-frequency signaling" and are the familiar
-    sounds you hear when dialing a phone. DTMF have been standardized so that
+    sounds you hear when dialing a phone. DTMF have been standardized so
     they can be understood and decoded by machines.
 
-    To play DTMF tones with the Twilio.js client library we can make use of
-    `sendDigits`, this method plays DTMF tones depending on the parameter you
-    pass to it.
+    To play DTMF tones with the Twilio.js client library we use the
+    `sendDigits` method, passing which digit the user pressed as our sole
+    argument.
 
     ---
     **See also:**
@@ -134,10 +157,9 @@
   :markdown
     ## Hang up the Call
 
-    We're about to finish this tutorial. The last step is to learn how to hang
-    up an active call.
+    Lastly, our users should be able to end a call.
 
-    To achive this we use `Twilio.Device.disconnectAll` which terminates the
+    To achive this we use `Twilio.Device.disconnectAll`, which terminates the
     current call.
 
     ---
@@ -148,9 +170,9 @@
   :markdown
     ## Where to Next?
 
-    That's it! We crafted an application that allows us to make
-    browser-to-phone calls using Twilio.js
+    That's it! We crafted an application that allows our users to make
+    browser-to-phone calls using Twilio.js.
 
-    Thanks for checking out this tutorial ! If you have any feedback to share
-    with us, we'd love to hear it. [Contact the Twilio Developer Education
-    Team](mailto:deved-oss@twilio.com) to let us know what you think.
+    If you have any feedback to share with us, we'd love to hear it.
+    [Contact the Twilio Developer Education Team](mailto:deved-oss@twilio.com)
+    to let us know what you think.
