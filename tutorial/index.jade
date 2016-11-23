@@ -42,14 +42,19 @@
 
     ![New Twiml App](//howtodocs.s3.amazonaws.com/new-twiml-app.png)
 
-    Any TwiML application requires a friendly name. Depending on your needs you
-    might want to set a Request URL for voice or messaging. For further
-    guidance you can take a look at [how do I create a TwiML App?](https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-)
+    Every TwiML application needs a friendly name (we called ours “Browser
+    Dialer”) and either a Voice URL or a Messaging URL. Since we want our users
+    to make phone calls, we used a URL to our application’s “/voice” route.
+
+    **Note:** When running the app locally, you can use a tool like
+    [ngrok](https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html)
+    to get a publicly accessible URL for your development environment.
 
     ---
 
     **See also:**
     - [REST API: Applications](//www.twilio.com/docs/api/rest/applications)
+    - [How do I create a TwiML App?](https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-)
 
 
 .step(

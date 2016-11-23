@@ -35,13 +35,17 @@ step we&#39;ll show you how to create it.</p>
 <a href="//www.twilio.com/console/phone-numbers/dev-tools/twiml-apps">Console</a> and
 click the button &quot;Create new TwiML App&quot;.</p>
 <p><img src="//howtodocs.s3.amazonaws.com/new-twiml-app.png" alt="New Twiml App"></p>
-<p>Any TwiML application requires a friendly name. Depending on your needs you
-might want to set a Request URL for voice or messaging. For further
-guidance you can take a look at <a href="https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-">how do I create a TwiML App?</a></p>
+<p>Every TwiML application needs a friendly name (we called ours “Browser
+Dialer”) and either a Voice URL or a Messaging URL. Since we want our users
+to make phone calls, we used a URL to our application’s “/voice” route.</p>
+<p><strong>Note:</strong> When running the app locally, you can use a tool like
+<a href="https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html">ngrok</a>
+to get a publicly accessible URL for your development environment.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
 <li><a href="//www.twilio.com/docs/api/rest/applications">REST API: Applications</a></li>
+<li><a href="https://support.twilio.com/hc/en-us/articles/223180928-How-do-I-create-a-TwiML-App-">How do I create a TwiML App?</a></li>
 </ul>
 </div><div data-title="Generate a Capability Token" data-file="index.js" data-highlight="13-25" class="step"><h2 id="generate-a-capability-token">Generate a Capability Token</h2>
 <p>Before our users can make any calls in their browsers, we need to create a
