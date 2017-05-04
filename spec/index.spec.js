@@ -32,3 +32,19 @@ describe('index route', function () {
     });
   });
 });
+
+describe('token route', function () {
+  describe('GET /token', function () {
+    it('responds with token', function (done) {
+      var testApp = supertest(app);
+      testApp
+        .get('/token')
+        .expect(200)
+        .end(function(err, res) {
+          const jsonResponse = JSON.parse(res.text);
+          expect(jsonResponse.token.length).to.be.above(0);
+          done();
+        });
+    });
+  });
+});
