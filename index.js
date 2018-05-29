@@ -11,6 +11,8 @@ let app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(urlencoded({ extended: false }));
 
+require('dotenv').load();
+
 // Generate a Twilio Client capability token
 app.get('/token', (request, response) => {
   const capability = new ClientCapability({
