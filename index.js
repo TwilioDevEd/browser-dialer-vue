@@ -44,6 +44,14 @@ app.post('/voice', (request, response) => {
   response.send(voiceResponse.toString());
 });
 
+
+app.use((error, req, res, next) => {
+  res.status(500)
+  res.send('Server Error')
+  console.error(error.stack)
+  next(error)
+});
+
 let server = http.createServer(app);
 let port = process.env.PORT || 3000;
 server.listen(port, () => {
